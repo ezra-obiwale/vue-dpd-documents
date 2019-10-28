@@ -1,4 +1,4 @@
-import { VueInstaller } from '@ezraobiwale/dpd'
+import dpd from '@ezraobiwale/dpd'
 import Documents from './Documents'
 import Document from './Document'
 
@@ -10,7 +10,7 @@ export default {
                 throw new Error('Http transport must be provided')
             }
 
-            VueInstaller.install(Vue, transport, socketIO)
+            Vue.prototype.$dpd = dpd(transport, socketIO)
         }
 
         Vue.component('dpd-documents', Documents)
