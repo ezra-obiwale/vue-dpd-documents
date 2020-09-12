@@ -1,6 +1,9 @@
 <template>
   <div>
-    <slot :document="document" :working="working" />
+    <slot
+      :document="document"
+      :working="working"
+    />
   </div>
 </template>
 
@@ -123,10 +126,17 @@ export default {
       ],
       default: false
     },
+    removeMethod: {
+      type: String,
+      default: 'delete'
+    },
     removeUrl: {
       type: String,
       description: 'The url to remove the document.',
       default: ''
+    },
+    saveMethod: {
+      type: String
     },
     saveUrl: {
       type: String,
@@ -154,7 +164,7 @@ export default {
     }
   },
   methods: {
-    load (done = () => {}) {
+    load (done = () => { }) {
       if (this.documentId) {
         this.working = true
         this.tryCatch(
@@ -170,7 +180,7 @@ export default {
         )
       }
     },
-    refresh (done = () => {}) {
+    refresh (done = () => { }) {
       this.document = {}
       this.load(done)
     },
@@ -180,7 +190,7 @@ export default {
           if (!this.documentId) {
             throw new Error('No id provided')
           }
-          await (this.removeUrl ? this.$dpd.transport.delete(this.removeUrl) : this.api.del(this.documentId))
+          await (this.removeUrl ? this.$dpd.transport[this.removeMethod](this.removeUrl) : this.api.del(this.documentId))
           this.$emit('removeOK', this.document)
         },
         error => {
@@ -194,7 +204,7 @@ export default {
       this.tryCatch(
         async () => {
           if (this.saveUrl) {
-            const method = this.documentId ? 'put' : 'post'
+            const method = this.saveMethod || (this.documentId ? 'put' : 'post')
             this.document = (await this.$dpd.transport[method](this.saveUrl, document || this.document)).data
           } else {
             if (this.documentId) {
