@@ -151,6 +151,9 @@ export default {
     }
   },
   watch: {
+    collection () {
+      this.$set(this, 'api', this.$dpd.col(this.collection))
+    },
     loadUrl () {
       this.load()
     },

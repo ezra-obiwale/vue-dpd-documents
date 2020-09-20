@@ -152,6 +152,9 @@ export default {
     }
   },
   watch: {
+    collection () {
+      this.$set(this, 'api', this.$dpd.col(this.collection))
+    },
     working (value) {
       this.$emit('working', value)
     }
