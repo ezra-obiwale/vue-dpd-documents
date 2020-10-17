@@ -1,6 +1,6 @@
 {
   "name": "@ezraobiwale/vue-dpd-documents",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Dpd library for vue",
   "main": "index.js",
   "repository": "https://github.com/ezra-obiwale/vue-dpd-documents.git",

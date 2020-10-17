@@ -181,7 +181,7 @@ export default {
       this.documents = []
     },
     load (done = () => {}) {
-      if (this.working) {
+      if (this.working && this.queryIsSame) {
         return
       }
       if (this.fetchAll && this.documents.length) {
@@ -198,8 +198,9 @@ export default {
             return done(this.documents)
           } else {
             documents = (await this.api.get(this.requestQuery)).data
-            this.lastQuery = { ...this.requestQuery }
           }
+
+          this.lastQuery = { ...this.requestQuery }
           this.documents = [...this.documents, ...documents]
           this.page++
           this.working = false
